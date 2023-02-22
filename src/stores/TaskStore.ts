@@ -8,10 +8,8 @@ export interface Task {
 
 export const useTaskStore = defineStore("taskStore", {
   state: () => ({
-    tasks: [
-      { id: 1, title: "buy milk", isFav: false },
-      { id: 2, title: "play Mork Borg", isFav: true },
-    ],
+    tasks: [] as any[],
+    isLoading: false,
   }),
   getters: {
     favs(): Task[] {
@@ -23,16 +21,46 @@ export const useTaskStore = defineStore("taskStore", {
     totalCount: (state): number => state.tasks.length,
   },
   actions: {
-    addTask(task: Task): void {
+    async getTasks() {
+      this.isLoading = true;
+      const res = await fetch("http://localhost:3000/tasks");
+      const data = await res.json();
+      this.tasks = data;
+      this.isLoading = false;
+    },
+    async addTask(task: Task): Promise<void> {
       this.tasks.push(task);
+
+      const res = await fetch("http://localhost:3000/tasks", {
+        method: "POST",
+        body: JSON.stringify(task),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!res.ok) {
+        console.log(res.statusText);
+      }
     },
-    deleteTask(id: number): void {
+    async deleteTask(id: number): Promise<void> {
       this.tasks = this.tasks.filter((task) => task.id !== id);
+
+      const res = await fetch("http://localhost:3000/tasks/" + id, {
+        method: "DELETE",
+      });
+      if (!res.ok) {
+        console.log(res.statusText);
+      }
     },
-    toggleFav(id: number): void {
-      this.tasks = this.tasks.map((task) =>
-        task.id === id ? { ...task, isFav: !task.isFav } : task
-      );
+    async toggleFav(id: number): Promise<void> {
+      const task = this.tasks.find((task) => task.id === id);
+      task.isFav = !task.isFav;
+      const res = await fetch("http://localhost:3000/tasks/" + id, {
+        method: "PATCH",
+        body: JSON.stringify({ isFav: task.isFav }),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!res.ok) {
+        console.log(res.statusText);
+      }
     },
   },
 });

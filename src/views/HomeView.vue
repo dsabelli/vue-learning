@@ -3,6 +3,7 @@ import { defineComponent, ref } from "vue";
 import { useTaskStore } from "../stores/TaskStore";
 import TaskDetails from "../components/TaskDetails.vue";
 import TaskForm from "@/components/TaskForm.vue";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   components: { TaskDetails, TaskForm },
@@ -10,7 +11,10 @@ export default defineComponent({
   setup() {
     const taskStore = useTaskStore();
     const fav = ref(false);
-    return { taskStore, fav };
+    taskStore.getTasks();
+    const { tasks, isLoading, favs, totalCount, favCount } =
+      storeToRefs(taskStore);
+    return { taskStore, fav, tasks, isLoading, favs, totalCount, favCount };
   },
 });
 </script>
@@ -27,18 +31,17 @@ export default defineComponent({
       >
         {{ fav ? "Show all" : "Show favs" }}
       </button>
-      <p>
-        {{ fav ? `${taskStore.favCount} fav` : taskStore.totalCount }} tasks to
-        do
-      </p>
-      <div v-if="fav" v-for="task in taskStore.favs">
+      <p>{{ fav ? `${favCount} fav` : totalCount }} tasks to do</p>
+      <div v-if="fav" v-for="task in favs">
         <TaskDetails :task="task" />
       </div>
-      <div v-else v-for="task in taskStore.tasks">
+      <div v-else v-for="task in tasks">
         <TaskDetails :task="task" />
       </div>
     </div>
     <TaskForm />
+
+    <button @click="taskStore.$reset">Reset State</button>
   </main>
 </template>
 
