@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import HomeView from "./views/HomeView.vue";
+import ReactionTimer from "./views/ReactionTimer.vue";
 </script>
 
 <template>
@@ -12,7 +13,7 @@ import HomeView from "./views/HomeView.vue";
       height="125"
     />
   </header>
-  <main><HomeView /></main>
+  <main><ReactionTimer /></main>
 </template>
 
 <style scoped>
