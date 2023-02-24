@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import FormView from "./views/FormView.vue";
 import HomeView from "./views/HomeView.vue";
 import ReactionTimer from "./views/ReactionTimer.vue";
 </script>
@@ -13,7 +14,7 @@ import ReactionTimer from "./views/ReactionTimer.vue";
       height="125"
     />
   </header>
-  <main><ReactionTimer /></main>
+  <main><FormView /></main>
 </template>
 
 <style scoped>
