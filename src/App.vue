@@ -14,7 +14,15 @@ import ReactionTimer from "./views/ReactionTimer.vue";
       height="125"
     />
   </header>
-  <main><FormView /></main>
+  <main>
+    <div>
+      <router-link to="/">Home</router-link>
+      <router-link :to="{ name: 'form' }">Form</router-link>
+      <router-link :to="{ name: 'reaction' }">ReactionTimer</router-link>
+      <router-link :to="{ name: 'jobs' }">Jobs</router-link>
+    </div>
+  </main>
+  <router-view />
 </template>
 
 <style scoped>
