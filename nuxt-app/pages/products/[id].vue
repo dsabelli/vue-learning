@@ -1,17 +1,16 @@
 <template>
-  <div>
-    {{ id }}
-  </div>
+  <div v-if="product">{{ product.title }}<img :src="product.image" /></div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-
+import { Product } from "~~/types";
 export default defineComponent({
-  setup() {
+  async setup() {
     const { id } = useRoute().params;
-
-    return { id };
+    const uri = "https://fakestoreapi.com/products/" + id;
+    const { data: product } = await useFetch<Product>(uri);
+    return { id, product };
   },
 });
 </script>
