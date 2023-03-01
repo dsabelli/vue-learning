@@ -1,5 +1,15 @@
 <template>
-  <div>This is the homepage</div>
+  <div>
+    <h2>Home</h2>
+    <p>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi odio quam
+      rerum distinctio, ex adipisci cum fuga nihil porro velit nam, aperiam eius
+      dicta repudiandae! Saepe repellat dolore magnam eaque? Impedit sequi atque
+      sint facilis perspiciatis? Tempora est nulla voluptate quam veritatis
+      tempore dolorum necessitatibus, illum fugiat molestias modi odio rerum
+      officia, non consectetur autem eveniet aspernatur qui. Eos, aspernatur?
+    </p>
+  </div>
 </template>
 
 <script lang="ts">
