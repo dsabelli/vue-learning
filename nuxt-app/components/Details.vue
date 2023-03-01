@@ -1,8 +1,6 @@
 <template>
   <div>
-    <NuxtLink :to="`/products/${product.id}`"
-      >{{ product.title }}<img :src="product.image"
-    /></NuxtLink>
+    <p>{{ product.description }}</p>
   </div>
 </template>
 

@@ -1,5 +1,12 @@
 <template>
-  <div v-if="product">{{ product.title }}<img :src="product.image" /></div>
+  <Head
+    ><Title>{{ product ? product.title : "Product" }}</Title></Head
+  >
+  <div v-if="product">
+    {{ product.title }}<img :src="product.image" /><Details
+      :product="product"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -10,6 +17,13 @@ export default defineComponent({
     const { id } = useRoute().params;
     const uri = "https://fakestoreapi.com/products/" + id;
     const { data: product } = await useFetch<Product>(uri);
+    if (!product.value) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: "Product not found",
+        fatal: true,
+      });
+    }
     return { id, product };
   },
 });
